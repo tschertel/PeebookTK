@@ -19,6 +19,8 @@ My goal with Peebook is to have an e-book reader capable of synchronize Moonread
 
 ## Requirements
 
+ttkbootstrap - <https://github.com/israel-dryer/ttkbootstrap/>
+
 ebooklib - <https://github.com/aerkalov/ebooklib>
 
 TkinterWeb - <https://github.com/Andereoo/TkinterWeb>
