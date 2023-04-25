@@ -33,12 +33,12 @@ class SettingsWindow(ttk.Toplevel):
         # self.position_center()
 
         # upper Frame
-        # self.upperFrame = ttk.Frame(self, border=10)
-        # self.upperFrame.pack(side=TOP)
+        self.upperFrame = ttk.Frame(self)
+        self.upperFrame.pack(side=TOP)
 
         # Dropbox Label Frame
         self.dropboxGroup = ttk.Labelframe(
-            self, text="Dropbox configuration", padding=5
+            self.upperFrame, text="Dropbox configuration", padding=5
         )
         self.dropboxGroup.grid(row=0, column=0, ipadx=5, ipady=5)
 
@@ -74,22 +74,26 @@ class SettingsWindow(ttk.Toplevel):
         )
         moonreaderSearchFolder.grid(row=1, column=2, padx=5)
 
+        # bottom frame
+        self.bottomFrame = ttk.Frame(self)
+        self.bottomFrame.pack(side=TOP)
         OKButton = ttk.Button(
-            self,
+            self.bottomFrame,
             padding=10,
             text="OK",
             command=self.onOKButton,
         )
-        OKButton.grid(row=1, column=0, padx=5, pady=5)
+
+        OKButton.grid(row=0, column=1)
 
         CancelButton = ttk.Button(
-            self,
+            self.bottomFrame,
             padding=10,
             text="CANCEL",
             bootstyle=DANGER,
             command=self.onCancelButton,
         )
-        CancelButton.grid(row=1, column=1, padx=5, pady=5)
+        CancelButton.grid(row=0, column=3)
 
     def onOKButton(self):
         if self.dropboxTokenEntry.get() != self.DROPBOXTOKEN:
