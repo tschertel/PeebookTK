@@ -24,3 +24,10 @@ ttkbootstrap - <https://github.com/israel-dryer/ttkbootstrap/>
 ebooklib - <https://github.com/aerkalov/ebooklib>
 
 TkinterWeb - <https://github.com/Andereoo/TkinterWeb>
+
+## Screenshots
+
+![image](https://user-images.githubusercontent.com/485568/234242205-195100eb-1a7b-4b06-8054-c1e92964cb58.png)
+
+
+![image](https://user-images.githubusercontent.com/485568/234242357-0b06d305-e628-4a1a-bee7-ef2dddabccf5.png)
