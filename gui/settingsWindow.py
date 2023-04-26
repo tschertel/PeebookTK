@@ -83,7 +83,6 @@ class SettingsWindow(ttk.Toplevel):
             text="OK",
             command=self.onOKButton,
         )
-
         OKButton.grid(row=0, column=1)
 
         CancelButton = ttk.Button(

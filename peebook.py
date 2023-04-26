@@ -89,10 +89,10 @@ class Peebook(ttk.Frame):
 
         # Creates HTML frame to show ebook content
         self.ebookView = HtmlFrame(self, messages_enabled=False)
-        # self.ebookView.set_parsemode("xhtml")
+        self.ebookView.set_parsemode("xhtml")
         self.ebookView.ignore_invalid_images(False)
         self.ebookView.load_html(
-            "<html><body><h1>Bem vindo ao Peebook!</h1></body></html>"
+            "<html><body><h1>Welcome to Peebook!</h1></body></html>"
         )
         self.ebookView.pack(side=RIGHT, fill=BOTH, expand=TRUE)
 
