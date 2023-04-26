@@ -126,7 +126,7 @@ class Peebook(ttk.Frame):
                 self.book = epub.read_epub(f.name, {"ignore_ncx": True})
             self.statusbarMessage.set(f.name)
             self.ebookView.load_html(
-                "<html><body><h1>Bem vindo ao Peebook!</h1></body></html>"
+                "<html><body><h1>Welcome to Peebook!</h1></body></html>"
             )
             configuration.save_config("Lastdir", "path", os.path.split(f.name)[0])
             configuration.save_config("History", "lastfile1", (f.name))
