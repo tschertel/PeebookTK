@@ -5,6 +5,7 @@ from tkinter import Label, Listbox, Menu, StringVar
 from tkinter.filedialog import askopenfilename
 
 import ebooklib
+import PyPDF2
 import ttkbootstrap as ttk
 from ebooklib import epub
 from tkinterweb import HtmlFrame
