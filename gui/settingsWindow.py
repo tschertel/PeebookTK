@@ -61,7 +61,7 @@ class SettingsWindow(ttk.Toplevel):
         self.moonreaderFolderEntry = ttk.Entry(self.dropboxGroup)
         if not self.MOONREADERFOLDER:
             self.moonreaderFolderEntry.insert(
-                0, path.join(getenv("USERPROFILE"), "Dropbox\Apps\Books\.Moon+\Cache")
+                0, path.join(getenv("USERPROFILE"), "Dropbox\\Apps\\Books\\.Moon+\\Cache")
             )
             # self.moonreaderFolderEntry.configure(state="readonly")
             self.moonreaderFolderEntry.config(state="disabled")
