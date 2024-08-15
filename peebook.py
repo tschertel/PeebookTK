@@ -4,9 +4,8 @@ import os
 from tkinter import Label, Listbox, Menu, StringVar
 from tkinter.filedialog import askopenfilename
 
-import ebooklib
+import pymupdf
 import ttkbootstrap as ttk
-from ebooklib import epub
 from tkinterweb import HtmlFrame
 from ttkbootstrap.constants import *
 
@@ -116,61 +115,44 @@ class Peebook(ttk.Frame):
             initialdir=configuration.load_config("Lastdir", "path"),
             filetypes=[
                 ("EPUB files", "*.epub"),
+                ("PDF files", "*.pdf"),
+                ("MOBI files", "*.mobi"),
             ],
         )
         if not file_path:
             return
         else:
             with open(file_path, "r") as f:
-                self.book = epub.read_epub(f.name, {"ignore_ncx": True})
+                self.book = pymupdf.open(f.name)
             self.statusbarMessage.set(f.name)
+
+            page = self.book.load_page(0)
             self.ebookView.load_html(
-                "<html><body><h1>Welcome to Peebook!</h1></body></html>"
+                page.get_text("html")
             )
+            
             configuration.save_config("Lastdir", "path", os.path.split(f.name)[0])
             configuration.save_config("History", "lastfile1", (f.name))
+            
             self.chaptersListBox.delete(0, END)
-
-            """ Needs to better handle book's chapters
-                It doesn't show chapter's title, it shows document's ID"""
-            for item in self.book.get_items_of_type(ebooklib.ITEM_DOCUMENT):
-                if item.is_chapter() == True:
-                    self.chaptersListBox.insert(END, item.get_id())
-            for cssfile in self.book.get_items_of_type(ebooklib.ITEM_STYLE):
-                self.cssfiles = []
-                self.cssfiles.append(cssfile)
-
-            """
-            Como pegar a capa do ebook:
-
-
-            try:
-                img = epubBook.get_metadata('OPF', 'cover')[0][-1]["content"]
-                if epubBook.opf_dir:
-                    img = epubBook.opf_dir +"/" + epubBook.get_item_with_id(img).get_name()
-                else:
-                    img = epubBook.get_item_with_id(img).get_name()
-            except:
-                print("该文件没有封面图")
-
-        
-            ebook.get_metadata('OPF', 'cover')[0][-1]["content"]
-            'cover'
-            ebook.get_item_with_id("cover").get_name()
-            'Images/cover.jpeg'
-            """
+            
+            toc = self.book.get_toc()
+            if len(toc) == 0:
+                for item in range(len(self.book)):
+                    self.chaptersListBox.insert(END, item)
+            else:
+                for item in toc:
+                    self.chaptersListBox.insert(END, item[1])
 
     def show_chapter(self, event):
         """Show chapter content inside HTMLFrame"""
         chapterIndex = self.chaptersListBox.get(self.chaptersListBox.curselection())
+        page = self.book.load_page(chapterIndex)
         self.ebookView.load_html(
-            self.book.get_item_with_id(chapterIndex).get_content().decode("utf-8")
+            page.get_text("html")
         )
-        for item in self.cssfiles:
-            self.ebookView.add_css(item.get_content().decode("utf-8"))
-
         print(f"Item selecionado: {chapterIndex}")
-        print(type(self.book.get_item_with_id(chapterIndex).get_links()))
+        #print(page.get_text("html"))
 
     def openSettingsWindow(self):
         self.settings = SettingsWindow(self, self.updateSettings)
@@ -189,17 +171,17 @@ class Peebook(ttk.Frame):
 
     def translateWithDeepl(self):
         print(
-            f'Traduzindo a palavra "{self.ebookView.get_currently_selected_text().strip()}" com o Deepl...'
+            f'Traduzindo "{self.ebookView.get_currently_selected_text().strip()}" com o Deepl...'
         )
 
     def translateWithLibre(self):
         print(
-            f'Traduzindo a palavra "{self.ebookView.get_currently_selected_text().strip()}" com o Libre...'
+            f'Traduzindo "{self.ebookView.get_currently_selected_text().strip()}" com o Libre...'
         )
 
     def translateWithLeo(self):
         print(
-            f'Traduzindo a palavra "{self.ebookView.get_currently_selected_text().strip()}" com o Leo...'
+            f'Traduzindo "{self.ebookView.get_currently_selected_text().strip()}" com o Leo...'
         )
 
     def getFileHistory(self):
