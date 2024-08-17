@@ -1,5 +1,5 @@
 import configparser
-from os import getenv, path
+#from os import getenv, path
 
 config = configparser.ConfigParser()
 
